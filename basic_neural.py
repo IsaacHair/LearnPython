@@ -14,16 +14,6 @@ import os
 def image_to_feature_vector(image, size=(32,32)):
     return cv2.resize(image, size).flatten()
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-        help="path to input datasheet bitch")
-ap.add_argument("-m", "--model", required=True,
-        help="path to output model file my guy")
-args = vars(ap.parse_args())
-
-print("[info] describing images...")
-imagePaths = list(paths.list_images(args["dataset"]))
-
 data = []
 labels = []
 
