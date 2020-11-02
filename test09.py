@@ -21,7 +21,25 @@ labels = []
 
 print(imagePaths)
 
-"""
+for (i, imagePath) in enumerate(imagePaths):
+    image = cv2.imread(imagePath)
+    label = imagePath.split(os.path.sep)[-1].split(".")[0]
+    features = image_to_feature_vector(image)
+    data.append(features)
+    labels.append(label)
+
+print(data, labels)
+
+le = LabelEncoder()
+labels = le.fit_transform(labels)
+
+data = np.array(data) / 255.0
+labels = np_utils.to_categorical(labels, 2)
+
+print(data, labels)
+
+(trainData, testData, trainLabels, testLabels) = train_test_split(data, labels, test_size=0.25, random_state=42)
+
 model = Sequential()
 model.add(Dense(768, input_dim=3072, bias_initializer="uniform", activation="relu"))
 model.add(Dense(384, activation="relu", kernel_initializer="uniform"))
@@ -34,4 +52,3 @@ model.fit(trainData, trainLabels, epochs=50, batch_size=128, verbose=1)
 
 (loss, accuracy) = model.evaluate(testData, testLabels, batch_size=128, verbose=1)
 print("so.... loss={:.4f}, acc={:.4f}%".format(loss, accuracy*100))
-"""
