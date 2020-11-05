@@ -44,3 +44,19 @@ model.fit(trainData, trainLabels, epochs=50, batch_size=128, verbose=1, validati
 
 (loss, accuracy) = model.evaluate(testData, testLabels, batch_size=128, verbose=1)
 print("Results: loss={:.4f}, acc={:.4f}%".format(loss, accuracy*100))
+
+
+print("Enter test file path: ")
+testpath = input()
+testimg = cv2.imread(testpath)
+features = image_to_feature_vector(testimg)
+features = np.array([features]) / 255.0
+
+CLASSES = ["cat", "dog"]
+probs = model.predict(features)[0]
+prediction = probs.argmax(axis=0)
+label = "{}: {:.2f}%".format(CLASSES[prediction], probs[prediction]*100)
+cv2.putText(testimg, label, (10, 35), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 3)
+cv2.imshow("IMAGE", testimg)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
