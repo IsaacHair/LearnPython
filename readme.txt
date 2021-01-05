@@ -1,3 +1,6 @@
+This repo serves as a place for me to create machine learning demo programs
+for "IHS Responsible ML".
+
 looks like these are some good libraries:
 Keras
 OpenCV
